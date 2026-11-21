@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App 11643 — Network &amp; Service Console</title>
+    <link rel="stylesheet" href="/console.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="header">
+        <div>
+          <span class="badge">PORT 11643</span>
+          <h1>Network &amp; Application Console</h1>
+          <p class="subtitle">
+            Localhost, LAN, Cloudflare Tunnel &amp; ngrok compatible full-stack service
+          </p>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <a href="/" class="btn btn-primary" style="text-decoration:none;">Open Browser Proxy</a>
+          <div class="status-pill" id="overall-status">
+            <span class="dot"></span>
+            <span id="overall-status-text">Checking...</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="grid">
+        <section class="card">
+          <div class="card-header">
+            <h2>Connectivity &amp; Routing</h2>
+            <button id="refresh-net-btn" class="btn btn-secondary" type="button">Refresh</button>
+          </div>
+          <div class="kv-list" id="network-info">
+            <div class="kv"><span>Status</span><strong>Loading...</strong></div>
+          </div>
+          <div class="tunnel-box">
+            <div class="tunnel-title">Tunnel Commands</div>
+            <code id="cf-cmd">cloudflared tunnel --url http://127.0.0.1:11643</code>
+            <code id="ngrok-cmd">ngrok http 11643</code>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <h2>WebSocket Diagnostics</h2>
+            <span class="pill" id="ws-status">Connecting...</span>
+          </div>
+          <p class="muted">
+            Endpoint: <code id="ws-url">-</code>
+          </p>
+          <div class="ws-controls">
+            <input
+              id="ws-input"
+              type="text"
+              placeholder="Send WebSocket echo message..."
+              value="Hello over WebSocket!"
+            />
+            <button id="ws-send-btn" class="btn btn-primary" type="button">Send Echo</button>
+            <button id="ws-ping-btn" class="btn btn-secondary" type="button">Ping</button>
+          </div>
+          <pre class="log-box" id="ws-log"></pre>
+        </section>
+
+        <section class="card card-wide">
+          <div class="card-header">
+            <h2>Authentication &amp; Live Task Store</h2>
+            <div id="auth-user-bar" class="hidden">
+              <span class="user-chip">Signed in as <strong id="auth-username"></strong></span>
+              <button id="logout-btn" class="btn btn-secondary" type="button">Sign out</button>
+            </div>
+          </div>
+
+          <div id="login-panel">
+            <p class="muted">
+              Sign in with session cookies (automatically adapts <code>Secure</code> flag for HTTP
+              local/LAN and HTTPS Cloudflare/ngrok tunnels). Default demo account:
+              <code>admin</code> / <code>admin123</code>.
+            </p>
+            <form id="login-form" class="inline-form">
+              <input id="login-username" type="text" placeholder="Username" value="admin" required />
+              <input
+                id="login-password"
+                type="password"
+                placeholder="Password"
+                value="admin123"
+                required
+              />
+              <button class="btn btn-primary" type="submit">Sign In</button>
+            </form>
+            <p id="login-error" class="error-text"></p>
+          </div>
+
+          <div id="items-panel" class="hidden">
+            <form id="item-form" class="inline-form">
+              <input
+                id="item-title"
+                type="text"
+                placeholder="Add a checklist or operational item..."
+                required
+              />
+              <button class="btn btn-primary" type="submit">Add Item</button>
+            </form>
+            <ul id="items-list" class="items-list"></ul>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/console.js"></script>
+  </body>
+</html>

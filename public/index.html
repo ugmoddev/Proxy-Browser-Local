@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Chrome — Browser Proxy 11643</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="browser-app" id="browser-app">
+      <!-- Chrome Tab Strip (1:1 Chrome Refresh) -->
+      <header class="tab-bar" id="tab-bar">
+        <button
+          id="btn-tab-search"
+          class="tab-search-btn"
+          type="button"
+          title="Tìm kiếm thẻ"
+          aria-label="Tìm kiếm thẻ"
+        >
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path d="M4.2 6.2a.75.75 0 0 1 1.06 0L8 8.94l2.74-2.74a.75.75 0 1 1 1.06 1.06l-3.27 3.27a.75.75 0 0 1-1.06 0L4.2 7.26a.75.75 0 0 1 0-1.06z"/>
+          </svg>
+        </button>
+
+        <div class="tabs-scroll" id="tabs-container" role="tablist"></div>
+
+        <button
+          id="new-tab-btn"
+          class="chrome-circle-btn new-tab-btn"
+          type="button"
+          title="Thẻ mới (Alt+T)"
+          aria-label="Thẻ mới"
+        >
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path d="M8 2.5a.75.75 0 0 1 .75.75v4h4a.75.75 0 0 1 0 1.5h-4v4a.75.75 0 0 1-1.5 0v-4h-4a.75.75 0 0 1 0-1.5h4v-4A.75.75 0 0 1 8 2.5z"/>
+          </svg>
+        </button>
+
+        <div class="tab-bar-spacer"></div>
+
+        <div class="caption-controls">
+          <button
+            id="btn-toggle-toolbar-strip"
+            class="caption-btn caption-toggle-bar"
+            type="button"
+            title="Ẩn/Hiện thanh tìm kiếm &amp; địa chỉ (Alt+B hoặc F9)"
+          >
+            <svg id="strip-toggle-icon" viewBox="0 0 16 16" width="13" height="13" fill="currentColor">
+              <path d="M4.2 9.8a.75.75 0 0 0 1.06 0L8 7.06l2.74 2.74a.75.75 0 1 0 1.06-1.06L8.53 5.47a.75.75 0 0 0-1.06 0L4.2 8.74a.75.75 0 0 0 0 1.06z"/>
+            </svg>
+          </button>
+          <button id="btn-caption-min" class="caption-btn" type="button" title="Thu gọn thanh tìm kiếm (Alt+B)">
+            <svg viewBox="0 0 12 12" width="10" height="10" fill="currentColor">
+              <rect x="2" y="5.5" width="8" height="1"/>
+            </svg>
+          </button>
+          <button id="btn-caption-max" class="caption-btn" type="button" title="Toàn màn hình trong khung localhost:11643">
+            <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.1">
+              <rect x="2.2" y="2.2" width="7.6" height="7.6"/>
+            </svg>
+          </button>
+          <button id="btn-caption-close" class="caption-btn caption-close" type="button" title="Đóng thẻ hiện tại">
+            <svg viewBox="0 0 12 12" width="10" height="10" stroke="currentColor" stroke-width="1.2">
+              <line x1="2.5" y1="2.5" x2="9.5" y2="9.5"/>
+              <line x1="9.5" y1="2.5" x2="2.5" y2="9.5"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Chrome Navigation Toolbar & Omnibox -->
+      <div class="toolbar" id="chrome-toolbar">
+        <div class="nav-buttons">
+          <button id="btn-back" class="chrome-circle-btn" type="button" title="Nhấp để quay lại">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+              <path d="M16.5 9.25H6.31l4.47-4.47a.75.75 0 1 0-1.06-1.06l-5.75 5.75a.75.75 0 0 0 0 1.06l5.75 5.75a.75.75 0 1 0 1.06-1.06L6.31 10.75H16.5a.75.75 0 0 0 0-1.5z"/>
+            </svg>
+          </button>
+          <button id="btn-forward" class="chrome-circle-btn" type="button" title="Nhấp để tiến tới">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+              <path d="M3.5 9.25h10.19L9.22 4.78a.75.75 0 0 1 1.06-1.06l5.75 5.75a.75.75 0 0 1 0 1.06l-5.75 5.75a.75.75 0 1 1-1.06-1.06l4.47-4.47H3.5a.75.75 0 0 1 0-1.5z"/>
+            </svg>
+          </button>
+          <button id="btn-reload" class="chrome-circle-btn" type="button" title="Tải lại trang này (Alt+R)">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+              <path d="M15.83 8.5A6.5 6.5 0 1 0 14.6 14.6a.75.75 0 1 1 1.15.96A8 8 0 1 1 17.5 10a.75.75 0 0 1-1.5 0h-.17z"/>
+              <path d="M16.75 3.75a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-.75.75h-4a.75.75 0 0 1 0-1.5H16V4.5a.75.75 0 0 1 .75-.75z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Chrome Pill Omnibox + Autocomplete -->
+        <div class="omnibox-wrap">
+          <form id="omnibox-form" class="omnibox-form">
+            <button id="btn-site-info" class="omnibox-tune-btn" type="button" title="Xem thông tin trang web">
+              <svg id="omnibox-left-icon" viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                <path d="M3 4.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm2.37 2.25H13.5a.75.75 0 0 0 0-1.5H5.37a2.5 2.5 0 0 1 0 1.5zM13 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.37.75H2.5a.75.75 0 0 0 0 1.5h8.13a2.5 2.5 0 0 1 0-1.5z"/>
+              </svg>
+            </button>
+            <input
+              id="omnibox-input"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Tìm kiếm trên Google hoặc nhập một URL (gõ chrome://settings)"
+            />
+            <div class="omnibox-right-actions">
+              <span id="incognito-pill" class="incognito-pill hidden">Ẩn danh</span>
+              <button id="btn-reader-mode" class="omnibox-icon-btn hidden" type="button" title="Chế độ đọc (Reader Mode)">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                  <path d="M2.5 3.5A1.5 1.5 0 0 1 4 2h3.25c.41 0 .75.34.75.75v10.5a.75.75 0 0 1-.75.75H4a1.5 1.5 0 0 1-1.5-1.5v-9zm7-1.5H12a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 12 14H9.5a.75.75 0 0 1-.75-.75V2.75c0-.41.34-.75.75-.75z"/>
+                </svg>
+              </button>
+              <button id="btn-bookmark" class="omnibox-icon-btn" type="button" title="Đánh dấu thẻ này">
+                &#9734;
+              </button>
+            </div>
+          </form>
+          <div class="omnibox-dropdown hidden" id="omnibox-dropdown"></div>
+        </div>
+
+        <!-- Chrome Extensions, Side Panel, Profile & 3-Dot Menu -->
+        <div class="tool-actions">
+          <button id="btn-extensions" class="chrome-circle-btn" type="button" title="Tiện ích mở rộng">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+              <path d="M10.5 2.5a2 2 0 0 1 2 2v.75h2.75a1.25 1.25 0 0 1 1.25 1.25v2.75h.75a2 2 0 1 1 0 4h-.75V16a1.25 1.25 0 0 1-1.25 1.25H12.5v-.75a2 2 0 1 0-4 0v.75H5.75A1.25 1.25 0 0 1 4.5 16v-2.75h.75a2 2 0 1 0 0-4H4.5V6.5a1.25 1.25 0 0 1 1.25-1.25H8.5V4.5a2 2 0 0 1 2-2z"/>
+            </svg>
+          </button>
+
+          <button id="btn-side-panel" class="chrome-circle-btn" type="button" title="Bảng điều khiển bên (Side Panel)">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+              <path d="M3.5 4A1.5 1.5 0 0 0 2 5.5v9A1.5 1.5 0 0 0 3.5 16h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 16.5 4h-13zM12 5.5v9H3.5v-9H12zm1.5 0h3v9h-3v-9z"/>
+            </svg>
+          </button>
+
+          <span class="toolbar-divider"></span>
+
+          <button id="btn-toggle-toolbar" class="chrome-circle-btn" type="button" title="Ẩn thanh tìm kiếm &amp; địa chỉ (Alt+B hoặc F9)">
+            <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor">
+              <path d="M4.2 9.8a.75.75 0 0 0 1.06 0L8 7.06l2.74 2.74a.75.75 0 1 0 1.06-1.06L8.53 5.47a.75.75 0 0 0-1.06 0L4.2 8.74a.75.75 0 0 0 0 1.06z"/>
+            </svg>
+          </button>
+
+          <button id="btn-chrome-profile" class="profile-avatar-btn" type="button" title="Hồ sơ Chrome 131 · Bấm để đổi Desktop / Mobile">
+            <span class="avatar-circle">C</span>
+          </button>
+
+          <button id="btn-chrome-menu" class="chrome-circle-btn" type="button" title="Tùy chỉnh và điều khiển Google Chrome">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor">
+              <circle cx="10" cy="4.5" r="1.4"/>
+              <circle cx="10" cy="10" r="1.4"/>
+              <circle cx="10" cy="15.5" r="1.4"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chrome Bookmarks Bar -->
+      <div class="bookmarks-bar" id="bookmarks-bar"></div>
+
+      <!-- Main Workspace Row (Viewport + Side Panel) -->
+      <div class="browser-body">
+        <div class="viewport-column">
+          <main class="viewport" id="viewport"></main>
+
+          <!-- Find in Page Bar (Alt+F) -->
+          <div class="find-bar hidden" id="find-bar">
+            <input id="find-input" type="text" placeholder="Tìm trong trang..." />
+            <span id="find-count" class="find-count">0/0</span>
+            <button id="find-prev" class="chrome-circle-btn" type="button" title="Kết quả trước">&#9650;</button>
+            <button id="find-next" class="chrome-circle-btn" type="button" title="Kết quả tiếp theo">&#9660;</button>
+            <button id="find-close" class="chrome-circle-btn" type="button" title="Đóng (Esc)">&times;</button>
+          </div>
+
+          <!-- Chrome DevTools Dock (F12 / Alt+I) -->
+          <section class="devtools-panel hidden" id="devtools-panel">
+            <div class="devtools-header">
+              <div class="devtools-tabs">
+                <button class="dt-tab active" data-dt="console" type="button">Console</button>
+                <button class="dt-tab" data-dt="network" type="button">Network</button>
+                <button class="dt-tab" data-dt="elements" type="button">Elements</button>
+                <button class="dt-tab" data-dt="storage" type="button">Application</button>
+              </div>
+              <div class="devtools-actions">
+                <button id="dt-refresh-btn" class="menu-mini-btn" type="button" title="Làm mới DOM/Storage">&#8635;</button>
+                <button id="dt-clear-btn" class="menu-mini-btn" type="button" title="Xóa log">&#8856;</button>
+                <button id="dt-close-btn" class="menu-mini-btn" type="button" title="Đóng DevTools">&times;</button>
+              </div>
+            </div>
+            <div class="devtools-body">
+              <div class="dt-pane active" id="dt-pane-console">
+                <div class="dt-log-list" id="dt-console-logs"></div>
+                <form class="dt-eval-form" id="dt-eval-form">
+                  <span class="dt-prompt">&gt;</span>
+                  <input id="dt-eval-input" type="text" placeholder="Chạy lệnh JavaScript trong trang hiện tại..." autocomplete="off" />
+                </form>
+              </div>
+              <div class="dt-pane" id="dt-pane-network">
+                <div class="dt-log-list" id="dt-network-logs"></div>
+              </div>
+              <div class="dt-pane" id="dt-pane-elements">
+                <pre class="dt-code-view" id="dt-elements-view">Bấm nút Làm mới (↻) để chụp DOM hiện tại...</pre>
+              </div>
+              <div class="dt-pane" id="dt-pane-storage">
+                <pre class="dt-code-view" id="dt-storage-view">Bấm nút Làm mới (↻) để xem Cookies &amp; LocalStorage...</pre>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Chrome Side Panel -->
+        <aside class="side-panel hidden" id="side-panel">
+          <div class="side-panel-header">
+            <select id="side-panel-mode" class="side-panel-select">
+              <option value="reading">Danh sách đọc</option>
+              <option value="bookmarks">Dấu trang</option>
+              <option value="history">Lịch sử</option>
+              <option value="notes">Ghi chú nhanh</option>
+            </select>
+            <button id="close-side-panel" class="chrome-circle-btn" type="button">&times;</button>
+          </div>
+          <div class="side-panel-content" id="side-panel-content"></div>
+        </aside>
+      </div>
+
+      <!-- Virtual Fullscreen Exit Pill -->
+      <button id="exit-vfs-btn" class="exit-vfs-btn hidden" type="button" title="Thoát toàn màn hình (Esc)">
+        Thoát toàn màn hình (Esc)
+      </button>
+    </div>
+
+    <!-- Chrome 3-Dot Overflow Menu -->
+    <div class="chrome-menu hidden" id="chrome-menu">
+      <button class="menu-item" id="menu-new-tab" type="button">
+        <span>Thẻ mới</span>
+        <span class="menu-shortcut">Alt+T</span>
+      </button>
+      <button class="menu-item" id="menu-new-incognito" type="button">
+        <span>Thẻ ẩn danh mới</span>
+        <span class="menu-shortcut">Alt+Shift+N</span>
+      </button>
+      <button class="menu-item" id="menu-reopen-closed" type="button">
+        <span>Mở lại thẻ vừa đóng</span>
+        <span class="menu-shortcut">Alt+Shift+T</span>
+      </button>
+      <button class="menu-item" id="menu-multi-open" type="button">
+        <span>Mở nhiều trang web cùng lúc...</span>
+      </button>
+      <div class="menu-sep"></div>
+      <div class="menu-row-zoom">
+        <span>Thu phóng</span>
+        <div class="zoom-controls">
+          <button id="btn-zoom-out" class="menu-mini-btn" type="button">−</button>
+          <span id="zoom-label" class="zoom-label">100%</span>
+          <button id="btn-zoom-in" class="menu-mini-btn" type="button">+</button>
+          <button id="btn-virtual-fullscreen" class="menu-mini-btn" type="button" title="Toàn màn hình trong khung">⛶</button>
+        </div>
+      </div>
+      <div class="menu-sep"></div>
+      <button class="menu-item" id="menu-history" type="button">
+        <span>Lịch sử (chrome://history)</span>
+        <span class="menu-shortcut">Alt+H</span>
+      </button>
+      <button class="menu-item" id="menu-downloads" type="button">
+        <span>Tệp đã tải xuống (chrome://downloads)</span>
+        <span class="menu-shortcut">Alt+J</span>
+      </button>
+      <button class="menu-item" id="menu-bookmarks-mgr" type="button">
+        <span>Trình quản lý dấu trang</span>
+        <span class="menu-shortcut">chrome://bookmarks</span>
+      </button>
+      <button class="menu-item" id="menu-toggle-bookmarks" type="button">
+        <span>Hiển thị thanh dấu trang</span>
+        <span class="menu-badge" id="menu-bm-val">Bật</span>
+      </button>
+      <button class="menu-item" id="menu-toggle-toolbar" type="button">
+        <span>Ẩn thanh tìm kiếm &amp; địa chỉ</span>
+        <span class="menu-shortcut">Alt+B / F9</span>
+      </button>
+      <div class="menu-sep"></div>
+      <button class="menu-item" id="menu-find" type="button">
+        <span>Tìm trong trang...</span>
+        <span class="menu-shortcut">Alt+F</span>
+      </button>
+      <button class="menu-item" id="menu-print" type="button">
+        <span>In trang...</span>
+      </button>
+      <button class="menu-item" id="menu-save-page" type="button">
+        <span>Lưu trang thành HTML...</span>
+      </button>
+      <button class="menu-item" id="menu-devtools" type="button">
+        <span>Công cụ dành cho nhà phát triển (DevTools)</span>
+        <span class="menu-shortcut">F12 / Alt+I</span>
+      </button>
+      <button class="menu-item" id="menu-toggle-split" type="button">
+        <span>Chia đôi màn hình (Split View)</span>
+        <span class="menu-badge" id="menu-split-val">OFF</span>
+      </button>
+      <button class="menu-item" id="menu-toggle-reader" type="button">
+        <span>Chế độ đọc (Reader Mode)</span>
+      </button>
+      <div class="menu-sep"></div>
+      <button class="menu-item" id="menu-toggle-focus" type="button">
+        <span>Always Focus (0 / 0)</span>
+        <span class="menu-badge" id="menu-focus-val">ON</span>
+      </button>
+      <button class="menu-item" id="menu-toggle-profile" type="button">
+        <span>User-Agent giả lập</span>
+        <span class="menu-badge" id="menu-profile-val">Chrome Win</span>
+      </button>
+      <button class="menu-item" id="menu-toggle-theme" type="button">
+        <span>Giao diện Chrome (Sáng / Tối)</span>
+        <span class="menu-badge" id="menu-theme-val">Tối</span>
+      </button>
+      <button class="menu-item" id="menu-settings" type="button">
+        <span>Cài đặt (chrome://settings)</span>
+      </button>
+      <button class="menu-item" id="btn-clear-cookies" type="button">
+        <span>Xóa dữ liệu duyệt web (Cookies)</span>
+        <span class="menu-badge" id="menu-cookies-val">0</span>
+      </button>
+      <button class="menu-item" id="btn-open-external" type="button">
+        <span>Mở trang ở tab trình duyệt ngoài</span>
+      </button>
+      <a class="menu-item" href="/console" target="_blank">
+        <span>Network Console</span>
+        <span class="menu-badge" id="net-badge-text">11643</span>
+      </a>
+    </div>
+
+    <!-- Tab Right-Click Context Menu -->
+    <div class="chrome-menu hidden" id="tab-context-menu">
+      <button class="menu-item" id="ctx-reload" type="button"><span>Tải lại</span></button>
+      <button class="menu-item" id="ctx-duplicate" type="button"><span>Nhân đôi</span></button>
+      <button class="menu-item" id="ctx-pin" type="button"><span>Ghim thẻ</span></button>
+      <button class="menu-item" id="ctx-mute" type="button"><span>Tắt tiếng trang web</span></button>
+      <button class="menu-item" id="ctx-group" type="button"><span>Thêm thẻ vào nhóm mới / đổi màu</span></button>
+      <button class="menu-item" id="ctx-ungroup" type="button"><span>Xóa khỏi nhóm</span></button>
+      <div class="menu-sep"></div>
+      <button class="menu-item" id="ctx-close" type="button"><span>Đóng</span></button>
+      <button class="menu-item" id="ctx-close-others" type="button"><span>Đóng các thẻ khác</span></button>
+      <button class="menu-item" id="ctx-close-right" type="button"><span>Đóng các thẻ bên phải</span></button>
+      <button class="menu-item" id="ctx-reopen" type="button"><span>Mở lại thẻ vừa đóng</span></button>
+    </div>
+
+    <!-- Extensions Popover -->
+    <div class="extensions-popover hidden" id="extensions-popover">
+      <div class="popover-header">Tiện ích mở rộng</div>
+      <button class="ext-row" id="ext-always-focus" type="button">
+        <span class="ext-icon ok">●</span>
+        <span class="ext-info">
+          <strong>Always Focus &amp; Visible</strong>
+          <small>Giữ trang luôn active (0 / 0)</small>
+        </span>
+        <span class="menu-badge" id="ext-focus-val">ON</span>
+      </button>
+      <button class="ext-row" id="ext-split-view" type="button">
+        <span class="ext-icon">◫</span>
+        <span class="ext-info">
+          <strong>Split View</strong>
+          <small>Xem song song 2 thẻ</small>
+        </span>
+        <span class="menu-badge" id="ext-split-val">OFF</span>
+      </button>
+      <button class="ext-row" id="ext-reader-mode" type="button">
+        <span class="ext-icon">▤</span>
+        <span class="ext-info">
+          <strong>Reader Mode</strong>
+          <small>Đọc bài viết gọn gàng</small>
+        </span>
+      </button>
+      <button class="ext-row" id="ext-devtools" type="button">
+        <span class="ext-icon">&lt;/&gt;</span>
+        <span class="ext-info">
+          <strong>Chrome DevTools</strong>
+          <small>Console, Network, Elements, Storage</small>
+        </span>
+      </button>
+      <button class="ext-row" id="ext-clear-cookies" type="button">
+        <span class="ext-icon">🍪</span>
+        <span class="ext-info">
+          <strong>Cookie Jar phiên Proxy</strong>
+          <small id="ext-cookies-sub">0 cookies đang lưu</small>
+        </span>
+        <span class="menu-badge">Xóa</span>
+      </button>
+    </div>
+
+    <!-- Site Info Popover (Tune Icon) -->
+    <div class="site-info-popover hidden" id="site-info-popover">
+      <div class="site-info-title" id="site-info-host">Trang thẻ mới</div>
+      <div class="site-info-row"><span>Kết nối</span><strong>Bảo mật qua Chrome 131 Proxy</strong></div>
+      <div class="site-info-row"><span>Always Focus</span><strong id="info-focus-status">Đang bật (0/0)</strong></div>
+      <div class="site-info-row"><span>User-Agent</span><strong id="info-ua-status">Chrome 131 · Windows</strong></div>
+      <div class="site-info-row"><span>Cookie jar</span><strong id="info-cookie-status">0 cookies</strong></div>
+      <div class="site-info-actions">
+        <button id="info-copy-url" class="secondary-btn" type="button">Sao chép URL</button>
+        <button id="info-add-reading" class="secondary-btn" type="button">+ Danh sách đọc</button>
+      </div>
+    </div>
+
+    <!-- Tab Search Popover -->
+    <div class="tab-search-popover hidden" id="tab-search-popover">
+      <input id="tab-search-input" type="text" placeholder="Tìm kiếm thẻ đang mở..." />
+      <div class="tab-search-list" id="tab-search-list"></div>
+    </div>
+
+    <!-- Modal: Open Multiple URLs at Once -->
+    <div class="modal-backdrop hidden" id="multi-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h2>Mở nhiều trang web cùng lúc</h2>
+          <button id="close-multi-modal" class="chrome-circle-btn" type="button">&times;</button>
+        </div>
+        <p class="modal-desc">
+          Nhập mỗi URL trên một dòng. Proxy sẽ mở đồng thời từng trang thành các thẻ riêng biệt.
+        </p>
+        <textarea id="multi-urls-input" rows="6">https://example.com
+https://en.wikipedia.org/wiki/Proxy_server
+https://news.ycombinator.com
+https://ugmoddev.github.io/Web-Test/</textarea>
+        <div class="modal-actions">
+          <button id="cancel-multi-btn" class="secondary-btn" type="button">Hủy</button>
+          <button id="launch-multi-btn" class="go-btn" type="button">Mở tất cả các thẻ</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/app-config.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
